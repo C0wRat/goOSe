@@ -22,7 +22,7 @@ end
 
 function install()
     -- Setup scureboot
-    fs.copy("/disk/goose/bin/secureboot", "/bin/secureboot")
+    fs.copy("/disk/goose/bin/secureboot", "/bin/secureBoot")
     centerText("goOSe Operating System")
     centerSubText(".")
     -- Setup addUser
