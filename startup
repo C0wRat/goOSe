@@ -1,0 +1,10 @@
+os.pullEvent = os.pullEventRaw
+print("STARTING")
+
+local sig = redstone.getInput("right")
+if sig then
+    shell.run("/bin/secureBoot")
+else
+    shell.run("/bin/blackjack")
+end
+
