@@ -1,0 +1,50 @@
+function centerText(text)
+    term.clear()
+    term.setCursorPos(1, 1)
+
+    local w, h = term.getSize()  -- Get screen size
+    local x = math.floor((w - #text) / 2) + 1
+    local y = math.floor(h / 2)
+
+    term.setCursorPos(x, y)
+    print(text)
+end
+
+function centerSubText(text)
+    local w, h = term.getSize()  -- Get screen size
+    local x = math.floor((w - #text) / 2) + 1
+    local y = math.floor(h / 2)
+
+    term.setCursorPos(x, y + 1)
+    print(text)
+end
+
+
+function install()
+    -- Setup scureboot
+    fs.copy("/disk/goose/bin/secureboot", "/bin/secureboot")
+    centerText("goOSe Operating System")
+    centerSubText(".")
+    -- Setup addUser
+    fs.copy("/disk/goose/bin/addUser", "/bin/addUser")
+    centerText("goOSe Operating System")
+    centerSubText("..")
+    -- Setup sha256
+    fs.copy("/disk/goose/bin/sha256", "/bin/sha256")
+    centerText("goOSe Operating System")
+    centerSubText("...")
+    -- Setup startup
+    fs.copy("/disk/goose/startup", "/startup/")
+    centerText("goOSe Operating System")
+    centerSubText("....")
+end
+
+function main()
+    term.clear()
+    term.setCursorPos(1,1)
+    install()
+end
+
+
+main()
+

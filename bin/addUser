@@ -1,0 +1,24 @@
+function hash(value)
+    shell.run("/bin/sha256", value)
+        return _G.result
+end
+
+
+function crateAccount()
+    -- Maybe add a nice messag for first time users.
+    print("Creating New User")
+    print("Enter username")
+    local uname = read()
+    print("enter password")
+    local pword = read()
+    print("confirm password")
+    local conf_pword = read()
+
+    if (pword == conf_pword) and (uname ~= "") and (pword ~= "") then
+        local password_file = fs.open("/etc/passwd", "a")
+        local new_account = uname .. ":" .. hash(pword)
+        password_file.write(new_account)
+    end
+end
+
+crateAccount()
