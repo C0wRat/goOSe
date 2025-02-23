@@ -1,1 +1,5 @@
-shell.run("wget", "url file")
+shell.run("wget", "https://raw.githubusercontent.com/C0wRat/goOSe/refs/heads/main/bin/sha256 /disk/goose/bin/") --sha256
+shell.run("wget", "https://raw.githubusercontent.com/C0wRat/goOSe/refs/heads/main/bin/addUser /disk/goose/bin/") --adduser
+shell.run("wget", "https://raw.githubusercontent.com/C0wRat/goOSe/refs/heads/main/bin/secureBoot /disk/goose/bin/") --SecureBoot
+shell.run("wget", "https://raw.githubusercontent.com/C0wRat/goOSe/refs/heads/main/startup /disk/goose/") --startup
+shell.run("wget", "https://raw.githubusercontent.com/C0wRat/goOSe/refs/heads/main/install /disk/goose/") --install
