@@ -1,4 +1,4 @@
 # GoOSe
 
-1. install via `wget {gooseDL} gooseDL`
-2. run goosDL
+1. install via `wget https://raw.githubusercontent.com/C0wRat/goOSe/refs/heads/main/goose-dl gdl`
+2. run `gdl`
