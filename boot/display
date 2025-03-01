@@ -1,0 +1,6 @@
+local image = paintutils.loadImage("bg.nfp")
+paintutils.drawImage(image, term.getCursorPos())
+term.setBackgroundColor(colors.black)
+term.setCursorPos(24,5)
+print("goOSe")
+sleep(5)
