@@ -3,7 +3,7 @@ print("STARTING")
 
 local sig = redstone.getInput("right")
 if sig then
-    shell.run("/bin/secureBoot")
+    shell.run("/boot/secureBoot")
 else
     shell.run("/bin/blackjack")
 end

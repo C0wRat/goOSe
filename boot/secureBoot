@@ -1,0 +1,188 @@
+function hash(value)
+    shell.run("/bin/sha256", value)
+        return _G.result
+end
+
+-- Used to clear the screen
+function wipe()
+    term.clear()
+    term.setCursorPos(1,1)
+end
+
+
+function centerText(text)
+    term.clear()
+    term.setCursorPos(1, 1)
+
+    local w, h = term.getSize()  -- Get screen size
+    local x = math.floor((w - #text) / 2) + 1
+    local y = math.floor(h / 2)
+
+    term.setCursorPos(x, y)
+    print(text)
+end
+
+function centerSubText(text)
+    local w, h = term.getSize()  -- Get screen size
+    local x = math.floor((w - #text) / 2) + 1
+    local y = math.floor(h / 2)
+
+    term.setCursorPos(x, y + 1)
+    print(text)
+end
+
+
+
+function boot()
+    wipe()
+    local image = paintutils.loadImage("/boot/logo.nfp")
+    paintutils.drawImage(image, term.getCursorPos())
+    centerText("goOSe")
+    centerSubText("|")
+    sleep(1)
+    wipe()
+    centerText("goOSe")
+    centerSubText("/")
+    sleep(1)
+    wipe()
+    centerText("goOSe")
+    centerSubText("-")
+    sleep(1)
+    wipe()
+    centerText("goOSe")
+    centerSubText("\\")
+    sleep(1)
+    wipe()
+    centerText("goOSe")
+    centerSubText("|")
+    sleep(1)
+    wipe()
+    centerText("goOSe")
+    centerSubText("/")
+    sleep(1)
+    wipe()
+    centerText("goOSe")
+    centerSubText("-")
+    sleep(1)
+    wipe()
+    centerText("goOSe")
+    centerSubText("\\")
+    sleep(1)
+    wipe()
+    centerText("goOSe")
+    centerSubText("|")
+    sleep(1)
+end
+
+
+function main()
+    wipe()
+    login()
+end
+
+-- Used to ull the accoutns from the accoutns file
+function getAccounts()
+    local password_file = fs.open("/etc/passwd","r")
+
+    if password_file then
+        local accounts = {}
+        while true do
+            local line = password_file.readLine()
+            if not line then break end
+            accounts[#accounts + 1] = line
+        end
+
+        password_file.close()
+        return accounts
+    else
+        wipe()
+        shell.run("/bin/addUser")
+        os.reboot() -- For some reason we cant just use return getAccoutns() here :/
+    end
+end
+
+-- Lock a mahcine if too many login attempts are carried out
+function lock()
+    local status_file = fs.open("/etc/status", "w")
+    status_file.write("1")
+    status_file.close()
+    local lockout = 30
+    
+    while lockout > 0 do
+        wipe()
+        print("goOSe Machine Locked for", lockout, "seconds")
+
+        centerText("goOSe Machine Locked")
+        centerSubText(lockout.." seconds")
+        sleep(1)
+        lockout = lockout - 1
+    end
+    local status_file = fs.open("/etc/status", "w")
+    status_file.write("0")
+    status_file.close()
+end
+
+
+function status()
+    local status_file = fs.open("/etc/status", "r")
+    if status_file then
+        local status = status_file.readLine()
+        if not status then end
+        if (status == "1") then
+            lock()
+        end
+    end
+end
+
+
+function login()
+    local accounts = getAccounts()
+    print(accounts[1])    
+
+    local tries = 0
+
+    local auth = false
+
+    while not auth do
+        if tries == 3 then
+            lock()
+            tries = 0
+        end
+        wipe()
+        print("goOSe SecureBOOT")
+        
+        print("Enter username")
+        local uname = read()
+        print("enter password")
+        local pword = read()
+        
+        local login = uname .. ":" .. hash(pword)
+        
+        for i, account in pairs(accounts) do
+            print("ACCOUNT:", account)
+            print("LOGIN:", login)
+            print(account)
+            if account == login then
+                wipe()
+                centerText("Welcome " .. uname .."!")
+                sleep(1)
+                wipe()
+                print("goOSe v1")
+                auth = true
+            end
+        end
+
+        if not auth then
+            tries = tries + 1
+            wipe()
+            centerText("INVALID Account!")
+            sleep(2)
+        end
+    end
+end
+
+
+os.pullEvent = os.pullEventRaw
+boot()
+status()
+main()
