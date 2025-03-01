@@ -1,1 +1,3 @@
-print("blackjack")
+local image = paintutils.loadImage("/imgs/buttons.nfp")
+paintutils.drawImage(image, term.getCursorPos())
+term.setBackgroundColor(colors.black)
